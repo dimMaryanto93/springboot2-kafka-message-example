@@ -1,4 +1,4 @@
-package com.tabeldata.message.publish.subscribe;
+package com.tabeldata.message.producer.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
