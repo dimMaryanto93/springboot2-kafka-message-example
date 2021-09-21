@@ -1,6 +1,6 @@
 package com.tabeldata.message.producer.example.controller;
 
-import com.tabeldata.message.producer.example.model.Payment;
+import com.tabeldata.message.model.Payment;
 import com.tabeldata.message.producer.example.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

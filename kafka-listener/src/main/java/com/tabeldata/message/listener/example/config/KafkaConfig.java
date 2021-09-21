@@ -1,5 +1,6 @@
 package com.tabeldata.message.listener.example.config;
 
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.BytesDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,10 +10,12 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.converter.ByteArrayJsonMessageConverter;
 import org.springframework.kafka.support.converter.RecordMessageConverter;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.support.serializer.StringOrBytesSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,10 +46,8 @@ public class KafkaConfig {
         props.put(BOOTSTRAP_SERVERS_CONFIG, this.bootstrapAddress);
         props.put(GROUP_ID_CONFIG, this.groupId);
         props.put(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(VALUE_DESERIALIZER_CLASS_CONFIG, BytesDeserializer.class);
-        props.put(VALUE_DEFAULT_TYPE, String.class);
-        props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
-        props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, BytesDeserializer.class.getName());
+        props.put(VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+
         props.put(TRUSTED_PACKAGES, this.trustedPackage);
 
         return new DefaultKafkaConsumerFactory<>(props);
@@ -58,7 +59,6 @@ public class KafkaConfig {
         ConcurrentKafkaListenerContainerFactory<String, String> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(cf);
-        factory.setMessageConverter(new StringJsonMessageConverter());
         return factory;
     }
 }

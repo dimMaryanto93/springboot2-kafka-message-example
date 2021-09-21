@@ -1,4 +1,4 @@
-package com.tabeldata.message.listener.example.model;
+package com.tabeldata.message.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,5 +15,4 @@ public class Payment {
     private String stan;
     private String cardNumber;
     private BigDecimal amount;
-
 }

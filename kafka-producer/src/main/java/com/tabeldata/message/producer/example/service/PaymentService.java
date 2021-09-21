@@ -1,13 +1,12 @@
 package com.tabeldata.message.producer.example.service;
 
-import com.tabeldata.message.producer.example.model.Payment;
+import com.tabeldata.message.model.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.messaging.support.GenericMessage;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Service
 public class PaymentService {
@@ -16,11 +15,11 @@ public class PaymentService {
     private KafkaTemplate<Object, Object> template;
 
     public void send(Payment payment) {
-        this.template.send(
-                new GenericMessage<>(payment,
-                        Collections.singletonMap(KafkaHeaders.TOPIC, "payment")
-                )
-        );
+        Message<Payment> message = MessageBuilder
+                .withPayload(payment)
+                .setHeader(KafkaHeaders.TOPIC, "payment")
+                .build();
+        this.template.send(message);
     }
 
 

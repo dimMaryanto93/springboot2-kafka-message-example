@@ -7,6 +7,5 @@ spring:
       group-id: "spring-kafka-listener"
       properties:
         spring.json:
-          value.default.type: java.lang.String
           trusted.packages: "*"
 
