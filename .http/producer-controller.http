@@ -1,4 +1,4 @@
-POST {{host}}:{{port}}{{context-path}}/api/kafka/send/payment
+POST {{host}}:{{port}}{{context-path}}/api/kafka/no-reply
 Content-Type: application/json
 
 {

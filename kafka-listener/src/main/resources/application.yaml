@@ -1,0 +1,12 @@
+server:
+  port: ${APPLICATION_PORT:0}
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
+    consumer:
+      group-id: "spring-kafka-listener"
+      properties:
+        spring.json:
+          value.default.type: java.lang.String
+          trusted.packages: "*"
+

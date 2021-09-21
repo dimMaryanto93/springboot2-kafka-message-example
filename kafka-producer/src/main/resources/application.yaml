@@ -3,3 +3,10 @@ server:
 spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
+    consumer:
+      group-id: "spring-kafka-producer"
+    producer:
+
+      properties:
+        spring.json.add.type.headers: false
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

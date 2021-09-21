@@ -15,7 +15,7 @@ public class PaymentController {
     @Autowired
     private PaymentService service;
 
-    @PostMapping(path = "/send/payment")
+    @PostMapping(path = "/no-reply")
     public void send(@RequestBody Payment payment) {
         this.service.send(payment);
     }
