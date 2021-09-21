@@ -9,7 +9,7 @@ Example spring-boot communication via kafka broker
 | `kafka-message`   | `-`           | Format message as json object |
 | `kafka-producer`  | `8081/tcp`    | Sending message               |
 | `kafka-listener`  | `Random/tcp`  | Receiving message using listener method   |
-| `kafka-consumer`  | `Random/tcp`  | Replying from `kafka-producer` message |
+| `kafka-consumer`  | `8082/tcp`    | Replying from `kafka-producer` message |
 
 
 ## How to run
