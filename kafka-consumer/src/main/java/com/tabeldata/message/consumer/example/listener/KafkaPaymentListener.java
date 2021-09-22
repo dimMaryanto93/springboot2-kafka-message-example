@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @KafkaListener(
-        id = "payment-gateway-listener",
+        id = "payment-gateway-consumer",
         topics = {"payment"}
 )
 public class KafkaPaymentListener {
