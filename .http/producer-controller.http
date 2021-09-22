@@ -1,3 +1,8 @@
+POST {{host}}:{{port}}{{context-path}}/api/kafka/string/no-reply?desc=Selamat anda mendapatkan pulsa sebesar 1jt rupiah
+Content-Type: application/json
+
+### seding string request
+
 POST {{host}}:{{port}}{{context-path}}/api/kafka/json/no-reply
 Content-Type: application/json
 
@@ -9,8 +14,3 @@ Content-Type: application/json
 }
 
 ### sending json request
-
-POST {{host}}:{{port}}{{context-path}}/api/kafka/string/no-reply?desc=Selamat anda mendapatkan pulsa sebesar 1jt rupiah
-Content-Type: application/json
-
-### seding string request

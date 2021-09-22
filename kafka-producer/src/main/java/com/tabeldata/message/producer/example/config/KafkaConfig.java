@@ -18,6 +18,8 @@ public class KafkaConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServer;
+    @Value("${spring.kafka.consumer.group-id}")
+    private String groupId;
 
     @Bean
     public KafkaAdmin admin() {
@@ -28,7 +30,23 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic paymentTopic() {
-        return TopicBuilder.name("payment")
+        return TopicBuilder.name(KafkaTopics.PAYMENT_TOPIC)
+                .partitions(10)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic replyTopicRequest() {
+        return TopicBuilder.name(KafkaTopics.REPLY_TOPIC_REQUEST)
+                .partitions(10)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic replyTopicResponse() {
+        return TopicBuilder.name(KafkaTopics.REPLY_TOPIC_RESPONSE)
                 .partitions(10)
                 .replicas(1)
                 .build();
@@ -36,7 +54,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic messageTopic() {
-        return TopicBuilder.name("message")
+        return TopicBuilder.name(KafkaTopics.MESSAGE_TOPIC)
                 .partitions(10)
                 .replicas(1)
                 .config(TopicConfig.COMPRESSION_TYPE_CONFIG, "zstd")

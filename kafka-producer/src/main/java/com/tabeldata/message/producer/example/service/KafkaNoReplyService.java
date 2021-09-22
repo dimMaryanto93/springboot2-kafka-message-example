@@ -9,7 +9,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PaymentService {
+public class KafkaNoReplyService {
 
     @Autowired
     private KafkaTemplate<Object, Object> template;
