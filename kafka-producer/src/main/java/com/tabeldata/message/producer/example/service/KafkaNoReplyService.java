@@ -1,6 +1,7 @@
 package com.tabeldata.message.producer.example.service;
 
 import com.tabeldata.message.model.Payment;
+import com.tabeldata.message.producer.example.config.KafkaTopics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;
@@ -17,7 +18,7 @@ public class KafkaNoReplyService {
     public void send(Payment payment) {
         Message<Payment> message = MessageBuilder
                 .withPayload(payment)
-                .setHeader(KafkaHeaders.TOPIC, "payment")
+                .setHeader(KafkaHeaders.TOPIC, KafkaTopics.PAYMENT_TOPIC)
                 .build();
         this.template.send(message);
     }
@@ -25,7 +26,7 @@ public class KafkaNoReplyService {
     public void send(String desc) {
         Message<String> message = MessageBuilder
                 .withPayload(desc)
-                .setHeader(KafkaHeaders.TOPIC, "message")
+                .setHeader(KafkaHeaders.TOPIC, KafkaTopics.MESSAGE_TOPIC)
                 .build();
         this.template.send(message);
     }

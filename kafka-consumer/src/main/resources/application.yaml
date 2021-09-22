@@ -7,4 +7,4 @@ spring:
       group-id: "spring-kafka-consumer"
       properties:
         spring.json:
-          trusted.packages: "com.tabeldata.message.model.Payment, java.util, java.lang"
+          trusted.packages: "com.tabeldata.message.model, java.util, java.lang"
