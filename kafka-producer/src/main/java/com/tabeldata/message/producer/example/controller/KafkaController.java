@@ -1,18 +1,10 @@
 package com.tabeldata.message.producer.example.controller;
 
-import com.tabeldata.message.model.Notification;
 import com.tabeldata.message.model.Payment;
 import com.tabeldata.message.producer.example.service.KafkaNoReplyService;
 import com.tabeldata.message.producer.example.service.KafkaReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeoutException;
-
-import static org.springframework.http.ResponseEntity.internalServerError;
-import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/api/kafka")
