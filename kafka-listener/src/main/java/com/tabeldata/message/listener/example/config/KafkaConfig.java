@@ -1,7 +1,5 @@
 package com.tabeldata.message.listener.example.config;
 
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.BytesDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -10,19 +8,15 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.support.converter.ByteArrayJsonMessageConverter;
 import org.springframework.kafka.support.converter.RecordMessageConverter;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
-import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.kafka.support.serializer.StringOrBytesSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 import static org.springframework.kafka.support.serializer.JsonDeserializer.TRUSTED_PACKAGES;
-import static org.springframework.kafka.support.serializer.JsonDeserializer.VALUE_DEFAULT_TYPE;
 
 @EnableKafka
 @Configuration

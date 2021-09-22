@@ -1,6 +1,5 @@
 package com.tabeldata.message.listener.example.service.listener;
 
-
 import com.tabeldata.message.model.Payment;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaHandler;
@@ -19,10 +18,5 @@ public class KafkaPaymentListener {
     public void getPaymentMethod(@Payload Payment payment) {
         log.info("Received payment: {}", payment);
     }
-
-//    @KafkaHandler(isDefault = true)
-//    public void getMessage(@Payload String message) {
-//        log.info("Received unknown: {}", message);
-//    }
 
 }
