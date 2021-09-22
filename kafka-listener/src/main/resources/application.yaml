@@ -7,5 +7,4 @@ spring:
       group-id: "spring-kafka-listener"
       properties:
         spring.json:
-          trusted.packages: "*"
-
+          trusted.packages: "com.tabeldata.message.model, java.util, java.lang"

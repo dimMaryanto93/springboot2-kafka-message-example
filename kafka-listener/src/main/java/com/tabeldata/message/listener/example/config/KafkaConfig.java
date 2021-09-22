@@ -41,7 +41,6 @@ public class KafkaConfig {
         props.put(GROUP_ID_CONFIG, this.groupId);
         props.put(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-
         props.put(TRUSTED_PACKAGES, this.trustedPackage);
 
         return new DefaultKafkaConsumerFactory<>(props);

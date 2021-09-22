@@ -5,3 +5,6 @@ spring:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
     consumer:
       group-id: "spring-kafka-consumer"
+      properties:
+        spring.json:
+          trusted.packages: "com.tabeldata.message.model.Payment, java.util, java.lang"
