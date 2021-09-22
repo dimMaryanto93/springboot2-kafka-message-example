@@ -22,5 +22,12 @@ public class PaymentService {
         this.template.send(message);
     }
 
+    public void send(String desc) {
+        Message<String> message = MessageBuilder
+                .withPayload(desc)
+                .setHeader(KafkaHeaders.TOPIC, "message")
+                .build();
+        this.template.send(message);
+    }
 
 }

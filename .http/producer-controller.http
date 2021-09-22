@@ -1,9 +1,16 @@
-POST {{host}}:{{port}}{{context-path}}/api/kafka/no-reply
+POST {{host}}:{{port}}{{context-path}}/api/kafka/json/no-reply
 Content-Type: application/json
 
 {
-  "transactionId": "1",
+  "transactionId": "{{$randomInt}}",
   "stan": "00001",
-  "cardNumber": "3264123421342314",
+  "cardNumber": "{{$uuid}}",
   "amount": "100000"
 }
+
+### sending json request
+
+POST {{host}}:{{port}}{{context-path}}/api/kafka/string/no-reply?desc=Selamat anda mendapatkan pulsa sebesar 1jt rupiah
+Content-Type: application/json
+
+### seding string request
