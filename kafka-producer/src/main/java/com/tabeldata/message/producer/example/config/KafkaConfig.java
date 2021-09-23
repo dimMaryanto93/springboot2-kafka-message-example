@@ -38,22 +38,6 @@ public class KafkaConfig {
     }
 
     @Bean
-    public NewTopic replyTopicRequest() {
-        return TopicBuilder.name(KafkaTopics.REPLY_TOPIC_REQUEST)
-                .partitions(10)
-                .replicas(1)
-                .build();
-    }
-
-    @Bean
-    public NewTopic replyTopicResponse() {
-        return TopicBuilder.name(KafkaTopics.REPLY_TOPIC_RESPONSE)
-                .partitions(10)
-                .replicas(1)
-                .build();
-    }
-
-    @Bean
     public NewTopic messageTopic() {
         return TopicBuilder.name(KafkaTopics.MESSAGE_TOPIC)
                 .partitions(10)

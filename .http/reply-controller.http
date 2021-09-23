@@ -1,11 +1,4 @@
-POST {{host}}:8082{{context-path}}/api/kafka/json/reply
+POST {{host}}:8082{{context-path}}/api/kafka/string/reply?description=Selamat anda mendapatkan 1jt rupiah
 Content-Type: application/json
-
-{
-  "transactionId": "{{$randomInt}}",
-  "stan": "00001",
-  "cardNumber": "{{$uuid}}",
-  "amount": "100000"
-}
 
 ### sending json request
