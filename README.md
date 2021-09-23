@@ -2,14 +2,29 @@
 
 Example spring-boot communication via kafka broker
 
-## Modules
+## Model / Interface
 
 | Name              | Ports         | Description                   |
 | :---              | :---          | :---                          |
 | `kafka-message`   | `-`           | Format message as json object |
+
+## Modules 1
+
+Scenario sending & receive message as json
+
+| Name              | Ports         | Description                   |
+| :---              | :---          | :---                          |
 | `kafka-producer`  | `8081/tcp`    | Sending message               |
 | `kafka-listener`  | `Random/tcp`  | Receiving message using listener method |
 | `kafka-consumer`  | `Random/tcp`  | Receiving message dif id same topic     |
+
+
+## Module 2
+
+Scenario sending & reply message
+
+| Name              | Ports         | Description                   |
+| :---              | :---          | :---                          |
 | `kafka-send-reply`| `8082/tcp`    | Send and Reply message in same module   |
 
 
