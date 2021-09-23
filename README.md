@@ -21,10 +21,10 @@ Scenario sending & receive message as json
 
 ## Module 2
 
-Scenario sending & reply message
+Scenario sending & reply message as string message
 
-| Name              | Ports         | Description                   |
-| :---              | :---          | :---                          |
+| Name              | Ports         | Description                             |
+| :---              | :---          | :---                                    |
 | `kafka-send-reply`| `8082/tcp`    | Send and Reply message in same module   |
 
 
