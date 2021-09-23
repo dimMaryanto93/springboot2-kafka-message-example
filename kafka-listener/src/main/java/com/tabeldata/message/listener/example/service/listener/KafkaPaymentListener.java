@@ -1,6 +1,7 @@
 package com.tabeldata.message.listener.example.service.listener;
 
 import com.tabeldata.message.model.Payment;
+import com.tabeldata.message.topics.KafkaTopics;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @KafkaListener(
         id = "payment-gateway-listener",
-        topics = {"payment"}
+        topics = {KafkaTopics.PAYMENT_TOPIC}
 )
 public class KafkaPaymentListener {
 

@@ -1,4 +1,4 @@
-package com.tabeldata.message.producer.example.config;
+package com.tabeldata.message.topics;
 
 public interface KafkaTopics {
 

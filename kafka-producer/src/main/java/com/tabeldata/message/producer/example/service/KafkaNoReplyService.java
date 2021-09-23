@@ -1,7 +1,7 @@
 package com.tabeldata.message.producer.example.service;
 
 import com.tabeldata.message.model.Payment;
-import com.tabeldata.message.producer.example.config.KafkaTopics;
+import com.tabeldata.message.topics.KafkaTopics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;

@@ -8,8 +8,8 @@ Example spring-boot communication via kafka broker
 | :---              | :---          | :---                          |
 | `kafka-message`   | `-`           | Format message as json object |
 | `kafka-producer`  | `8081/tcp`    | Sending message               |
-| `kafka-listener`  | `Random/tcp`  | Receiving message using listener method   |
-| `kafka-consumer`  | `8082/tcp`    | Replying from `kafka-producer` message |
+| `kafka-listener`  | `Random/tcp`  | Receiving message using listener method |
+| `kafka-consumer`  | `8082/tcp`    | Receiving message dif id same topic     |
 
 
 ## How to run
@@ -26,13 +26,9 @@ Example spring-boot communication via kafka broker
    ```bash
    docker-compose -p dev --env-file .env up -d
    ```
-4. Run module `kafka-producer`, using command:
+4. Run springboot per module, using command:
    ```bash
-   mvn clean -DskipTests -pl kafka-producer spring-boot:run 
-   ```
-5. Run module `kafka-listner`, using command:
-   ```bash
-   mvn clean -DskipTests -pl kafka-listener spring-boot:run
+   mvn clean -DskipTests -pl <kafka-producer | kafka-listener | kafka-consumer> spring-boot:run 
    ```
 
 References:

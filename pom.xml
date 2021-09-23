@@ -8,6 +8,7 @@
         <module>kafka-listener</module>
         <module>kafka-producer</module>
         <module>kafka-consumer</module>
+        <module>kafka-reply</module>
     </modules>
 
     <parent>

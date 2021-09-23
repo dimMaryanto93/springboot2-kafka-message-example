@@ -1,5 +1,6 @@
 package com.tabeldata.message.producer.example.config;
 
+import com.tabeldata.message.topics.KafkaTopics;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.common.config.TopicConfig;
 import org.springframework.beans.factory.annotation.Value;
