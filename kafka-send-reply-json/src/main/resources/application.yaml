@@ -1,0 +1,11 @@
+server:
+  port: ${APPLICATION_PORT:8083}
+spring:
+  main.allow-bean-definition-overriding: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
+    consumer:
+      group-id: "spring-kafka-send-reply"
+      properties:
+        spring.json:
+          trusted.packages: "com.tabeldata.message.model, java.util, java.lang"

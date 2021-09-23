@@ -9,6 +9,7 @@
         <module>kafka-producer</module>
         <module>kafka-consumer</module>
         <module>kafka-send-reply</module>
+        <module>kafka-send-reply-json</module>
     </modules>
 
     <parent>

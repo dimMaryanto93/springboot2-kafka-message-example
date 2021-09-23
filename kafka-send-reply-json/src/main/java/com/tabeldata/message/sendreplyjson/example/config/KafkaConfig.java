@@ -1,4 +1,4 @@
-package com.tabeldata.message.sendreply.example.config;
+package com.tabeldata.message.sendreplyjson.example.config;
 
 import com.tabeldata.message.topics.KafkaTopics;
 import org.apache.kafka.clients.admin.AdminClientConfig;
@@ -46,7 +46,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic replyTopicRequest() {
-        return TopicBuilder.name(KafkaTopics.REPLY_TOPIC_REQUEST)
+        return TopicBuilder.name(KafkaTopics.REPLY_JSON_TOPIC_REQUEST)
                 .partitions(10)
                 .replicas(1)
                 .build();

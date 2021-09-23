@@ -27,6 +27,13 @@ Scenario sending & reply message as string message
 | :---              | :---          | :---                                    |
 | `kafka-send-reply`| `8082/tcp`    | Send and Reply message in same module   |
 
+## Module 3
+
+Scenario sending & reply message as json message
+
+| Name                     | Ports         | Description                            |
+| :---                     | :---          | :---                                   |
+| `kafka-send-reply-json`  | `8083/tcp`    | Send and Reply message json format     |
 
 ## How to run
 
@@ -44,7 +51,7 @@ Scenario sending & reply message as string message
    ```
 4. Run springboot per module, using command:
    ```bash
-   mvn clean -DskipTests -pl <kafka-producer | kafka-listener | kafka-consumer> spring-boot:run 
+   mvn clean -DskipTests -pl <module-name> spring-boot:run 
    ```
 
 References:
