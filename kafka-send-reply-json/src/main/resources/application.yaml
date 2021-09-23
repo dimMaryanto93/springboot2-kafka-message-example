@@ -8,4 +8,4 @@ spring:
       group-id: "spring-kafka-send-reply"
       properties:
         spring.json:
-          trusted.packages: "com.tabeldata.message.model, java.util, java.lang"
+          trusted.packages: "com.tabeldata.message.model, com.tabeldata.message.sendreplyjson.example.model, java.util, java.lang"

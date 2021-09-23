@@ -1,0 +1,11 @@
+POST {{host}}:8083{{context-path}}/api/kafka/json/reply
+Content-Type: application/json
+
+{
+  "transactionId": "{{$randomInt}}",
+  "stan": "00001",
+  "cardNumber": "{{$uuid}}",
+  "amount": "100000"
+}
+
+### sending json request
