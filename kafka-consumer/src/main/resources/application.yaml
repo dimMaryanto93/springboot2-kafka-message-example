@@ -1,5 +1,5 @@
 server:
-  port: ${APPLICATION_PORT:8082}
+  port: ${APPLICATION_PORT:0}
 spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
