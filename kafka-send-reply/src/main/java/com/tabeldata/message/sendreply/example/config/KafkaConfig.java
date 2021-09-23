@@ -1,6 +1,7 @@
 package com.tabeldata.message.sendreply.example.config;
 
 import com.tabeldata.message.topics.KafkaTopics;
+import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +16,6 @@ import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.apache.kafka.clients.admin.AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG;
 
 @EnableKafka
 @Configuration
@@ -41,7 +40,7 @@ public class KafkaConfig {
     @Bean
     public KafkaAdmin admin() {
         Map<String, Object> configs = new HashMap<>();
-        configs.put(BOOTSTRAP_SERVERS_CONFIG, this.bootstrapAddress);
+        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, this.bootstrapAddress);
         return new KafkaAdmin(configs);
     }
 

@@ -1,6 +1,7 @@
 server:
   port: ${APPLICATION_PORT:8082}
 spring:
+  main.allow-bean-definition-overriding: true
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
     consumer:
@@ -8,5 +9,3 @@ spring:
       properties:
         spring.json:
           trusted.packages: "com.tabeldata.message.model, java.util, java.lang"
-    producer:
-      value-serializer: org.springframework.kafka.support.serializer.StringOrBytesSerializer
