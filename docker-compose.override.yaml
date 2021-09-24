@@ -8,3 +8,15 @@ services:
     image: ${PRIVATE_REGISTRY_PULL:-docker.io/}confluentinc/cp-kafka:latest
     ports:
       - "9092:9092"
+  postgres:
+    image: ${PRIVATE_REGISTRY_PULL:-docker.io/}postgres:12.6
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
+      - POSTGRES_DB
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+volumes:
+  pg_data:

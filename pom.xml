@@ -10,6 +10,7 @@
         <module>kafka-consumer</module>
         <module>kafka-send-reply</module>
         <module>kafka-send-reply-json</module>
+        <module>kafka-transaction</module>
     </modules>
 
     <parent>
@@ -27,6 +28,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <kafka-message.version>0.0.1-SNAPSHOT</kafka-message.version>
     </properties>
 
     <dependencies>

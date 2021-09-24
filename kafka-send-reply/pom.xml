@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.tabeldata.example</groupId>
             <artifactId>kafka-message</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${kafka-message.version}</version>
         </dependency>
 
         <dependency>

@@ -1,0 +1,44 @@
+server:
+  port: ${APPLICATION_PORT:8083}
+spring:
+  main.allow-bean-definition-overriding: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
+    consumer:
+      group-id: "spring-kafka-send-reply"
+      properties:
+        spring.json:
+          trusted.packages: "com.tabeldata.message.model, com.tabeldata.message.sendreplyjson.example.model, java.util, java.lang"
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USER:example_kafka}
+    password: ${POSTGRES_PASSWORD:example_kafka}
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:example_kafka}
+  flyway:
+    baseline-version: 1
+    enabled: true
+    encoding: UTF-8
+    clean-disabled: false
+    clean-on-validation-error: true
+    connect-retries: 2
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    database: postgresql
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQL95Dialect
+      format_sql: true
+      enable_lazy_load_no_trans: true
+      id:
+        new_generator_mappings: false
+      current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+      globally_quoted_identifiers: true
+      temp:
+        use_jdbc_metadata_defaults: false
+
