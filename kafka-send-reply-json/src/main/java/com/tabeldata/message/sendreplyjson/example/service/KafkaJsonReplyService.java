@@ -1,18 +1,13 @@
 package com.tabeldata.message.sendreplyjson.example.service;
 
-import com.tabeldata.message.model.Notification;
-import com.tabeldata.message.model.Payment;
 import com.tabeldata.message.sendreplyjson.example.model.KafkaModelContainer;
 import com.tabeldata.message.topics.KafkaTopics;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.requestreply.ReplyingKafkaTemplate;
 import org.springframework.kafka.requestreply.RequestReplyFuture;
-import org.springframework.kafka.requestreply.RequestReplyMessageFuture;
-import org.springframework.kafka.requestreply.RequestReplyTypedMessageFuture;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
