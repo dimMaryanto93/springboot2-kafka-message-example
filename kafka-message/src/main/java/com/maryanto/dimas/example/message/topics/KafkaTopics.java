@@ -6,4 +6,5 @@ public interface KafkaTopics {
     String MESSAGE_TOPIC = "message";
     String REPLY_TOPIC_REQUEST = "order-request";
     String REPLY_JSON_TOPIC_REQUEST = "order-json-request";
+    String TRANSACTION_TOPIC = "order-transaction";
 }
