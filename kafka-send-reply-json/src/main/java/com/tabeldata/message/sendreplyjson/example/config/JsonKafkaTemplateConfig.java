@@ -21,6 +21,7 @@ import org.springframework.kafka.support.serializer.ParseStringDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Configuration
 public class JsonKafkaTemplateConfig {
