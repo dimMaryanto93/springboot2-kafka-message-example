@@ -1,5 +1,5 @@
 server:
-  port: ${APPLICATION_PORT:8083}
+  port: ${APPLICATION_PORT:8084}
 spring:
   main.allow-bean-definition-overriding: true
   kafka:

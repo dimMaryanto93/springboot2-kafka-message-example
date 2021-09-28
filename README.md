@@ -35,6 +35,14 @@ Scenario sending & reply message as json message
 | :---                     | :---          | :---                                   |
 | `kafka-send-reply-json`  | `8083/tcp`    | Send and Reply message json format     |
 
+### Module 4 
+
+Scenario sending & received message with database transaction
+
+| Name                     | Ports         | Description                            |
+| :---                     | :---          | :---                                   |
+| `kafka-transaction`      | `8084/tcp`    | Send and Reply message json format     |
+
 ## How to run
 
 1. Downloads dependencies using command:
