@@ -17,6 +17,8 @@ import org.springframework.kafka.support.converter.RecordMessageConverter;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.kafka.support.serializer.ParseStringDeserializer;
+import org.springframework.kafka.transaction.KafkaTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,8 +39,15 @@ public class JsonKafkaTemplateConfig {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, this.bootstrapAddress);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+//        props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "order_tx");
+        props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
+        props.put(ProducerConfig.LINGER_MS_CONFIG, 100);
+        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
+        props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
-        return new DefaultKafkaProducerFactory<>(props);
+        DefaultKafkaProducerFactory<String, KafkaModelContainer> defaultPf = new DefaultKafkaProducerFactory<>(props);
+        defaultPf.setTransactionIdPrefix("order_tx-");
+        return defaultPf;
     }
 
     @Bean
@@ -46,6 +55,7 @@ public class JsonKafkaTemplateConfig {
             ProducerFactory<String, KafkaModelContainer> pf,
             RecordMessageConverter converter) {
         KafkaTemplate<String, KafkaModelContainer> template = new KafkaTemplate<>(pf);
+
 //        template.setMessageConverter(converter);
         return template;
     }
@@ -57,10 +67,10 @@ public class JsonKafkaTemplateConfig {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, this.groupId);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ParseStringDeserializer.class);
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         props.put(JsonDeserializer.TRUSTED_PACKAGES, this.trustedPackage);
         props.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
         props.put(JsonDeserializer.REMOVE_TYPE_INFO_HEADERS, false);
-
 
         return new DefaultKafkaConsumerFactory<>(props,
                 new StringDeserializer(),
@@ -88,6 +98,7 @@ public class JsonKafkaTemplateConfig {
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(cf);
         factory.setReplyTemplate(kafkaTemplate);
+//        factory.setErrorHandler(new SeekToCurrentErrorHandler());
         return factory;
     }
 
@@ -99,6 +110,13 @@ public class JsonKafkaTemplateConfig {
                 containerFactory.createContainer("replies");
         repliesContainer.getContainerProperties().setGroupId("repliesGroup");
         repliesContainer.setAutoStartup(false);
+//        repliesContainer.setErrorHandler(new SeekToCurrentErrorHandler());
         return repliesContainer;
     }
+
+//    @Bean
+//    public KafkaTransactionManager<String, KafkaModelContainer> kafkaTransactionManager(
+//            ProducerFactory<String, KafkaModelContainer> pf) {
+//        return new KafkaTransactionManager<>(pf);
+//    }
 }

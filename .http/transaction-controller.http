@@ -1,0 +1,10 @@
+POST {{host}}:8084{{context-path}}/api/kafka/transaction/success
+Content-Type: application/json
+
+{
+  "requestBy": "user001",
+  "partNumber": "{{$uuid}}",
+  "qty": "{{$randomInt}}"
+}
+
+### sending json request

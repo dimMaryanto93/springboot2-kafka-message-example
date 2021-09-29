@@ -45,8 +45,16 @@ public class KafkaConfig {
     }
 
     @Bean
-    public NewTopic replyTopicRequest() {
-        return TopicBuilder.name(KafkaTopics.TRANSACTION_TOPIC)
+    public NewTopic transactionCreateBillTopic() {
+        return TopicBuilder.name(KafkaTopics.TRANSACTION_CREATE_BILL_TOPIC)
+                .partitions(10)
+                .replicas(1)
+                .build();
+    }
+
+    @Bean
+    public NewTopic transactionCreateVaTopic() {
+        return TopicBuilder.name(KafkaTopics.TRANSACTION_CREATE_VA_TOPIC)
                 .partitions(10)
                 .replicas(1)
                 .build();

@@ -5,10 +5,11 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
     consumer:
-      group-id: "spring-kafka-send-reply"
+      group-id: "spring-kafka-transaction"
       properties:
         spring.json:
           trusted.packages: "com.tabeldata.message.model, com.tabeldata.message.sendreplyjson.example.model, java.util, java.lang"
+      enable-auto-commit: false
   datasource:
     driver-class-name: org.postgresql.Driver
     username: ${POSTGRES_USER:example_kafka}
@@ -41,4 +42,8 @@ spring:
       globally_quoted_identifiers: true
       temp:
         use_jdbc_metadata_defaults: false
-
+logging:
+  level:
+    org.springframework.transaction: trace
+    org.springframework.kafka.transaction: debug
+    org.springframework.jdbc: debug
