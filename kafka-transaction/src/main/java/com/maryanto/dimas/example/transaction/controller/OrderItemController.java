@@ -18,6 +18,11 @@ public class OrderItemController {
 
     @PostMapping("/transaction/success")
     public ResponseEntity<?> sendAndReply(@RequestBody OrderPart order) {
+        /**
+         * may problem in kafka config
+         * errors: kafka_1      | org.apache.kafka.common.errors.InvalidReplicationFactorExcept
+         * ion: Replication factor: 3 larger than available brokers: 1.
+         */
         this.orderService.orderItems(order);
 
         return ResponseEntity.ok()
