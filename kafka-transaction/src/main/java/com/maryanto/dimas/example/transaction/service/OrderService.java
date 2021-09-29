@@ -89,6 +89,8 @@ public class OrderService {
 
         kafkaTemplate.send(createBillMessage);
         kafkaTemplate.send(createVirtualAccountMessage);
+        kafkaTemplate.flush();
+
         this.orderItemRepository.save(new OrderPartEntity(
                 order.getPartNumber(),
                 order.getQty(),

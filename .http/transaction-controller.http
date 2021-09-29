@@ -1,3 +1,14 @@
+POST {{host}}:8084{{context-path}}/api/kafka/transaction/success
+Content-Type: application/json
+
+{
+  "requestBy": "user001",
+  "partNumber": "{{$uuid}}",
+  "qty": "{{$randomInt}}"
+}
+
+### sending request within transaction manager
+
 POST {{host}}:8084{{context-path}}/api/kafka/without-transaction/success
 Content-Type: application/json
 
