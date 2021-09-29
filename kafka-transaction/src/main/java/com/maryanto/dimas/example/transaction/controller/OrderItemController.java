@@ -17,14 +17,34 @@ public class OrderItemController {
     private OrderService orderService;
 
     @PostMapping("/transaction/success")
-    public ResponseEntity<?> sendAndReply(@RequestBody OrderPart order) {
+    public ResponseEntity<?> withinTransaction(@RequestBody OrderPart order) {
         /**
          * #FIXME may problem in kafka config
          * errors: kafka_1      | org.apache.kafka.common.errors.InvalidReplicationFactorExcept
          * ion: Replication factor: 3 larger than available brokers: 1.
          */
-        this.orderService.orderItems(order);
+        this.orderService.withinTransaction(order);
 
+        return ResponseEntity.ok()
+                .build();
+    }
+
+    @PostMapping("/without-transaction/success")
+    public ResponseEntity<?> withoutTransaction(@RequestBody OrderPart order) {
+        this.orderService.withoutTransaction(order);
+        return ResponseEntity.ok()
+                .build();
+    }
+
+    @PostMapping("/proxy-transaction/success")
+    public ResponseEntity<?> proxyTransaction(@RequestBody OrderPart order) {
+        /**
+         * #FIXME may problem in kafka config
+         * errors: kafka_1      | org.apache.kafka.common.errors.InvalidReplicationFactorExcept
+         * ion: Replication factor: 3 larger than available brokers: 1.
+         */
+
+        this.orderService.proxyTransaction(order);
         return ResponseEntity.ok()
                 .build();
     }

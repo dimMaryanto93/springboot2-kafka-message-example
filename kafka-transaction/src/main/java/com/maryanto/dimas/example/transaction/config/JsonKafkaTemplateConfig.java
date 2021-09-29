@@ -8,6 +8,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
@@ -17,12 +18,13 @@ import org.springframework.kafka.support.converter.RecordMessageConverter;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.kafka.support.serializer.ParseStringDeserializer;
-import org.springframework.kafka.transaction.ChainedKafkaTransactionManager;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,15 +45,14 @@ public class JsonKafkaTemplateConfig {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, this.bootstrapAddress);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-//        props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "order_tx");
+        props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "order_tx-");
+        props.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, 1000);
         props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
         props.put(ProducerConfig.LINGER_MS_CONFIG, 100);
         props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
-        DefaultKafkaProducerFactory<String, KafkaModelContainer> defaultPf = new DefaultKafkaProducerFactory<>(props);
-        defaultPf.setTransactionIdPrefix("order_tx-");
-        return defaultPf;
+        return new DefaultKafkaProducerFactory<>(props);
     }
 
     @Bean
@@ -97,7 +98,7 @@ public class JsonKafkaTemplateConfig {
             KafkaTemplate<String, KafkaModelContainer> kafkaTemplate,
             ConsumerFactory<String, KafkaModelContainer> cf,
             MessageConverter converter,
-            ChainedKafkaTransactionManager<String, KafkaModelContainer> trxManager) {
+            PlatformTransactionManager trxManager) {
         ConcurrentKafkaListenerContainerFactory<String, KafkaModelContainer> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(cf);
@@ -120,20 +121,16 @@ public class JsonKafkaTemplateConfig {
     }
 
     @Bean
-    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    public JpaTransactionManager jpaTransactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
     @Bean
+    @Primary
     public KafkaTransactionManager<String, KafkaModelContainer> kafkaTransactionManager(
             ProducerFactory<String, KafkaModelContainer> pf) {
         return new KafkaTransactionManager<>(pf);
     }
 
-    @Bean
-    public ChainedKafkaTransactionManager<String, KafkaModelContainer> chainedKafkaTransactionManager(
-            KafkaTransactionManager<String, KafkaModelContainer> kafkaTransactionManager,
-            JpaTransactionManager transactionManager) {
-        return new ChainedKafkaTransactionManager<>(kafkaTransactionManager, transactionManager);
-    }
+
 }

@@ -12,6 +12,7 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -22,7 +23,7 @@ public class OrderService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-    public void orderItems(OrderPart order) {
+    public void withinTransaction(OrderPart order) {
         KafkaModelContainer request = new KafkaModelContainer(order);
         Message<KafkaModelContainer> createBillMessage =
                 MessageBuilder
@@ -52,6 +53,46 @@ public class OrderService {
                     order.getRequestBy()));
             return true;
         });
+
+    }
+
+    public void withoutTransaction(OrderPart order) {
+        KafkaModelContainer request = new KafkaModelContainer(order);
+        Message<KafkaModelContainer> createBillMessage =
+                MessageBuilder
+                        .withPayload(request)
+                        .setHeader(KafkaHeaders.TOPIC, KafkaTopics.TRANSACTION_CREATE_BILL_TOPIC)
+                        .build();
+
+        Message<KafkaModelContainer> createVirtualAccountMessage =
+                MessageBuilder.withPayload(request)
+                        .setHeader(KafkaHeaders.TOPIC, KafkaTopics.TRANSACTION_CREATE_VA_TOPIC)
+                        .build();
+
+        kafkaTemplate.send(createBillMessage);
+        kafkaTemplate.send(createVirtualAccountMessage);
+    }
+
+    @Transactional
+    public void proxyTransaction(OrderPart order) {
+        KafkaModelContainer request = new KafkaModelContainer(order);
+        Message<KafkaModelContainer> createBillMessage =
+                MessageBuilder
+                        .withPayload(request)
+                        .setHeader(KafkaHeaders.TOPIC, KafkaTopics.TRANSACTION_CREATE_BILL_TOPIC)
+                        .build();
+
+        Message<KafkaModelContainer> createVirtualAccountMessage =
+                MessageBuilder.withPayload(request)
+                        .setHeader(KafkaHeaders.TOPIC, KafkaTopics.TRANSACTION_CREATE_VA_TOPIC)
+                        .build();
+
+        kafkaTemplate.send(createBillMessage);
+        kafkaTemplate.send(createVirtualAccountMessage);
+        this.orderItemRepository.save(new OrderPartEntity(
+                order.getPartNumber(),
+                order.getQty(),
+                order.getRequestBy()));
 
     }
 }

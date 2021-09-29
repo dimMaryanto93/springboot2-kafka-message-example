@@ -2,8 +2,6 @@ version: '3.9'
 services:
   zookeeper:
     image: ${PRIVATE_REGISTRY_PULL:-docker.io/}confluentinc/cp-zookeeper:latest
-    ports:
-      - "2181:2181"
   kafka:
     image: ${PRIVATE_REGISTRY_PULL:-docker.io/}confluentinc/cp-kafka:latest
     ports:

@@ -1,4 +1,4 @@
-POST {{host}}:8084{{context-path}}/api/kafka/transaction/success
+POST {{host}}:8084{{context-path}}/api/kafka/without-transaction/success
 Content-Type: application/json
 
 {
@@ -7,4 +7,15 @@ Content-Type: application/json
   "qty": "{{$randomInt}}"
 }
 
-### sending json request
+### sending request without transaction manager
+
+POST {{host}}:8084{{context-path}}/api/kafka/proxy-transaction/success
+Content-Type: application/json
+
+{
+  "requestBy": "user001",
+  "partNumber": "{{$uuid}}",
+  "qty": "{{$randomInt}}"
+}
+
+### sending request with proxy config @Transactional
