@@ -17,13 +17,17 @@ import org.springframework.kafka.support.converter.RecordMessageConverter;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.kafka.support.serializer.ParseStringDeserializer;
+import org.springframework.kafka.transaction.ChainedKafkaTransactionManager;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.EntityManagerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@EnableTransactionManagement
 public class JsonKafkaTemplateConfig {
 
     @Value("${spring.kafka.bootstrap-servers}")
@@ -77,7 +81,6 @@ public class JsonKafkaTemplateConfig {
                 new JsonDeserializer<>(KafkaModelContainer.class));
     }
 
-
     @Bean
     public ReplyingKafkaTemplate<String, KafkaModelContainer, KafkaModelContainer> replyingTemplate(
             ProducerFactory<String, KafkaModelContainer> pf,
@@ -93,11 +96,13 @@ public class JsonKafkaTemplateConfig {
     public ConcurrentKafkaListenerContainerFactory<String, KafkaModelContainer> kafkaListenerContainerFactory(
             KafkaTemplate<String, KafkaModelContainer> kafkaTemplate,
             ConsumerFactory<String, KafkaModelContainer> cf,
-            MessageConverter converter) {
+            MessageConverter converter,
+            ChainedKafkaTransactionManager<String, KafkaModelContainer> trxManager) {
         ConcurrentKafkaListenerContainerFactory<String, KafkaModelContainer> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(cf);
         factory.setReplyTemplate(kafkaTemplate);
+        factory.getContainerProperties().setTransactionManager(trxManager);
 //        factory.setErrorHandler(new SeekToCurrentErrorHandler());
         return factory;
     }
@@ -114,9 +119,21 @@ public class JsonKafkaTemplateConfig {
         return repliesContainer;
     }
 
-//    @Bean
-//    public KafkaTransactionManager<String, KafkaModelContainer> kafkaTransactionManager(
-//            ProducerFactory<String, KafkaModelContainer> pf) {
-//        return new KafkaTransactionManager<>(pf);
-//    }
+    @Bean
+    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
+    }
+
+    @Bean
+    public KafkaTransactionManager<String, KafkaModelContainer> kafkaTransactionManager(
+            ProducerFactory<String, KafkaModelContainer> pf) {
+        return new KafkaTransactionManager<>(pf);
+    }
+
+    @Bean
+    public ChainedKafkaTransactionManager<String, KafkaModelContainer> chainedKafkaTransactionManager(
+            KafkaTransactionManager<String, KafkaModelContainer> kafkaTransactionManager,
+            JpaTransactionManager transactionManager) {
+        return new ChainedKafkaTransactionManager<>(kafkaTransactionManager, transactionManager);
+    }
 }

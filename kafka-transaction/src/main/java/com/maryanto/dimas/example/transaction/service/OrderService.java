@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-//@Transactional(readOnly = true)
 public class OrderService {
 
     @Autowired
@@ -23,7 +22,6 @@ public class OrderService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-    //    @Transactional
     public void orderItems(OrderPart order) {
         KafkaModelContainer request = new KafkaModelContainer(order);
         Message<KafkaModelContainer> createBillMessage =
@@ -47,12 +45,13 @@ public class OrderService {
             event.inTransaction();
             event.send(createBillMessage);
             event.send(createVirtualAccountMessage);
+
+            this.orderItemRepository.save(new OrderPartEntity(
+                    order.getPartNumber(),
+                    order.getQty(),
+                    order.getRequestBy()));
             return true;
         });
 
-        this.orderItemRepository.save(new OrderPartEntity(
-                order.getPartNumber(),
-                order.getQty(),
-                order.getRequestBy()));
     }
 }

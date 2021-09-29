@@ -10,6 +10,7 @@ spring:
         spring.json:
           trusted.packages: "com.tabeldata.message.model, com.tabeldata.message.sendreplyjson.example.model, java.util, java.lang"
       enable-auto-commit: false
+      isolation-level: read_committed
   datasource:
     driver-class-name: org.postgresql.Driver
     username: ${POSTGRES_USER:example_kafka}

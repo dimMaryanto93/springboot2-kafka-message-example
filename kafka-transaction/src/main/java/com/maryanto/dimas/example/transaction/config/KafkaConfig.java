@@ -48,7 +48,8 @@ public class KafkaConfig {
     public NewTopic transactionCreateBillTopic() {
         return TopicBuilder.name(KafkaTopics.TRANSACTION_CREATE_BILL_TOPIC)
                 .partitions(10)
-                .replicas(1)
+                .replicas(3)
+                .partitions(3)
                 .build();
     }
 
@@ -56,7 +57,8 @@ public class KafkaConfig {
     public NewTopic transactionCreateVaTopic() {
         return TopicBuilder.name(KafkaTopics.TRANSACTION_CREATE_VA_TOPIC)
                 .partitions(10)
-                .replicas(1)
+                .replicas(3)
+                .partitions(3)
                 .build();
     }
 
