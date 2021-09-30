@@ -22,6 +22,7 @@ import org.springframework.kafka.transaction.KafkaTransactionManager;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
 import javax.persistence.EntityManagerFactory;
 import java.time.Duration;
@@ -62,6 +63,7 @@ public class JsonKafkaTemplateConfig {
         KafkaTemplate<String, KafkaModelContainer> template = new KafkaTemplate<>(pf);
 
 //        template.setMessageConverter(converter);
+        template.setAllowNonTransactional(true);
         return template;
     }
 
@@ -90,6 +92,10 @@ public class JsonKafkaTemplateConfig {
         ReplyingKafkaTemplate<String, KafkaModelContainer, KafkaModelContainer> template =
                 new ReplyingKafkaTemplate<>(pf, repliesContainer);
 //        template.setMessageConverter(converter);
+        template.setDefaultReplyTimeout(Duration.ofSeconds(5));
+        template.setSharedReplyTopic(true);
+        template.setAllowNonTransactional(true);
+        template.afterPropertiesSet();
         return template;
     }
 
@@ -129,7 +135,10 @@ public class JsonKafkaTemplateConfig {
     @Primary
     public KafkaTransactionManager<String, KafkaModelContainer> kafkaTransactionManager(
             ProducerFactory<String, KafkaModelContainer> pf) {
-        return new KafkaTransactionManager<>(pf);
+        KafkaTransactionManager<String, KafkaModelContainer> kafkaTrx = new KafkaTransactionManager<>(pf);
+        kafkaTrx.setTransactionSynchronization(
+                AbstractPlatformTransactionManager.SYNCHRONIZATION_ON_ACTUAL_TRANSACTION);
+        return kafkaTrx;
     }
 
 

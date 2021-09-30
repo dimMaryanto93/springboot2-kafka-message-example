@@ -7,7 +7,7 @@ import com.maryanto.dimas.example.transaction.model.KafkaModelContainer;
 import com.maryanto.dimas.example.transaction.repository.OrderItemRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
 
     @Autowired
-    private KafkaTemplate<String, KafkaModelContainer> kafkaTemplate;
+    private KafkaOperations<String, KafkaModelContainer> kafkaTemplate;
     @Autowired
     private OrderItemRepository orderItemRepository;
 
@@ -35,11 +35,6 @@ public class OrderService {
                 MessageBuilder.withPayload(request)
                         .setHeader(KafkaHeaders.TOPIC, KafkaTopics.TRANSACTION_CREATE_VA_TOPIC)
                         .build();
-
-        log.info("using kafka transaction");
-// uncomment this for using transaction
-//        kafkaTemplate.send(createBillMessage);
-//        kafkaTemplate.send(createVirtualAccountMessage);
 
 //        uncomment this for using local transaction
         this.kafkaTemplate.executeInTransaction(event -> {
