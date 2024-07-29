@@ -55,7 +55,7 @@ Scenario sending & received message with database transaction
    ```
 3. Running kafka cluster in docker, using `docker-compose` command:
    ```bash
-   docker-compose -p dev --env-file .env up -d
+   docker compose -p dev --env-file .env up -d
    ```
 4. Run springboot per module, using command:
    ```bash
